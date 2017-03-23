@@ -1,77 +1,117 @@
 Vue.component('Inscription', {
-  'template': '<h1 class="title is-2">{{title}}</h1>',
+  'template': '<h1 class="ui center aligned header">{{title}}</h1>',
   'props': ['title']
-});
+})
 
 Vue.component('LineResults', {
-  'template': '<div>\
-    <div>Total Lines: {{lines}}</div>\
-    <div>Glyph Lines: {{glines}}</div>\
-    <div>Whitespace Lines: {{wlines}}</div>\
-    </div>',
-  'props': ['lines', 'glines'],
-  'computed': {
-    'wlines': function () {
-      return this.lines - this.glines;
-    }
-  }
-});
+  'template':
+  '<div>\
+     <div class="ui small yellow statistic">\
+       <div class="value">{{tlines}}</div>\
+       <div class="label">Total Lines</div>\
+     </div>\
+     <div class="ui small yellow statistic">\
+       <div class="value">{{glines}}</div>\
+       <div class="label">Glyph Lines</div>\
+     </div>\
+     <div class="ui small yellow statistic">\
+       <div class="value">{{wlines}}</div>\
+       <div class="label">Whitespace Lines</div>\
+     </div>\
+   </div>',
+  'props': ['tlines', 'glines', 'wlines']
+})
 
 Vue.component('CharResults', {
-  'template': '<div>\
-    <div>Total Characters: {{chars}}</div>\
-    <div>Glyph Characters: {{gchars}}</div>\
-    <div>Whitespace Characters: {{wchars}}</div>\
+  'template':
+   '<div>\
+      <div class="ui small teal statistic">\
+        <div class="value">{{tchars}}</div>\
+        <div class="label">Total Chars</div>\
+      </div>\
+      <div class="ui small teal statistic">\
+        <div class="value">{{gchars}}</div>\
+        <div class="label">Glyph Chars</div>\
+      </div>\
+      <div class="ui small teal statistic">\
+        <div class="value">{{wchars}}</div>\
+        <div class="label">Whitespace Chars</div>\
+      </div>\
     </div>',
-  'props': ['chars', 'gchars'],
-  'computed': {
-    'wchars': function () {
-      return this.chars - this.gchars;
-    }
-  }
-});
+  'props': ['tchars', 'gchars', 'wchars']
+})
 
 Vue.component('TimeResults', {
-  'template': '<div>At {{cps}} Characters per Second, it would take {{seconds}} seconds to retype this code!</div>',
+  'template':
+   '<div>\
+      <div class="ui small brown statistic">\
+        <div class="value">{{cps}}</div>\
+        <div class="label">Chars per Second</div>\
+      </div>\
+      <div class="ui small brown statistic">\
+        <div class="value">{{seconds}}</div>\
+        <div class="label">seconds to retype\
+      </div>\
+    </div>',
   'props': ['cps', 'seconds']
-});
+})
 
 Vue.component('Controller', {
-  'template': '<main class="container is-fluid">\
-    <Inscription title="Code Size"/>\
-    <textarea v-model="code" class="textarea"></textarea>\
-    <LineResults :lines="lines" :glines="glines"/>\
-    <CharResults :chars="chars" :gchars="gchars"/>\
-    <TimeResults :cps="cps" :seconds="seconds"/>\
+  'template':
+   '<div class="basic ui segment">\
+     <div class="ui fluid container">\
+        <Inscription title="Code Size"/>\
+        <textarea v-model="code" rows="25" style="width:100%;"></textarea>\
+        <div class="ui grid">\
+          <div class="five wide center aligned column">\
+            <LineResults :tlines="tlines" :glines="glines" :wlines="wlines"/>\
+          </div>\
+          <div class="six wide center aligned column">\
+            <CharResults :tchars="tchars" :gchars="gchars" :wchars="wchars"/>\
+          </div>\
+          <div class="five wide center aligned column">\
+            <TimeResults :cps="cps" :seconds="seconds"/>\
+          </div>\
+        </div>\
+      </div>\
     </main>',
   'data': function () {
     return {
       'code': ''
-    };
+    }
   },
   'computed': {
     'lines': function () {
-      return this.code.split(/\n/).length;
+      return this.code.split(/\n/)
+    },
+    'tlines': function () {
+      return this.lines.length
     },
     'glines': function () {
-      return this.code.split(/\n/).filter(function (e) {return e !== ''}).length;
+      return this.lines.filter(function (e) {return e != ''}).length
     },
-    'chars': function () {
-      return this.code.length;
+    'wlines': function () {
+      return this.tlines - this.glines
+    },
+    'tchars': function () {
+      return this.code.length
     },
     'gchars': function () {
-      return this.code.replace(/\s/g, '').length;
+      return this.code.replace(/\s/g, '').length
+    },
+    'wchars': function () {
+      return this.tchars - this.gchars
     },
     'seconds': function () {
-      return this.chars / this.cps;
+      return this.tchars / this.cps
     },
     'cps': function () {
-      return 5;
+      return 5
     }
   }
-});
+})
 
 new Vue({
   'el': '#Mount',
   'template': '<Controller/>'
-});
+})
