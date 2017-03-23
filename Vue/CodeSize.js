@@ -61,7 +61,7 @@ Vue.component('Controller', {
    '<div class="basic ui segment">\
      <div class="ui fluid container">\
         <Inscription title="Code Size"/>\
-        <textarea v-model="code" rows="25" style="width:100%;"></textarea>\
+        <textarea v-model="code" rows="30" style="width:100%;font-family:monospace"></textarea>\
         <div class="ui grid">\
           <div class="five wide center aligned column">\
             <LineResults :tlines="tlines" :glines="glines" :wlines="wlines"/>\
