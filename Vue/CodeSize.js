@@ -1,5 +1,8 @@
 Vue.component('Inscription', {
-  'template': '<h1 class="ui center aligned header">{{title}}</h1>',
+  'template':
+   '<div class="ui basic padded center aligned segment" style="background-color:#06D6A0;">\
+      <h1 class="ui header" style="color:#FFFFFF;">{{title}}</h1>\
+    </div>',
   'props': ['title']
 })
 
@@ -69,22 +72,24 @@ Vue.component('ClassResults', {
 
 Vue.component('Controller', {
   'template':
-   '<div class="basic ui segment">\
-     <div class="ui fluid container">\
-        <Inscription title="Code Size"/>\
-        <textarea v-model="code" rows="30" style="width:100%;font-family:monospace"></textarea>\
-        <div class="ui grid">\
-          <div class="eight wide center aligned column">\
-            <LineResults :tlines="tlines" :glines="glines" :wlines="wlines"/>\
-          </div>\
-          <div class="eight wide center aligned column">\
-            <CharResults :tchars="tchars" :gchars="gchars" :wchars="wchars"/>\
-          </div>\
-          <div class="eight wide center aligned column">\
-            <TimeResults :cps="cps" :seconds="seconds"/>\
-          </div>\
-          <div class="eight wide center aligned column">\
-            <ClassResults :codeclass="codeclass"/>\
+   '<main>\
+      <Inscription title="Code Size"/>\
+      <div class="ui basic padded segment">\
+        <textarea v-model="code" rows="25" style="width:100%;font-family:monospace"></textarea>\
+        <div class="ui basic padded segment">\
+          <div class="ui grid">\
+            <div class="eight wide center aligned column">\
+              <LineResults :tlines="tlines" :glines="glines" :wlines="wlines"/>\
+            </div>\
+            <div class="eight wide center aligned column">\
+              <CharResults :tchars="tchars" :gchars="gchars" :wchars="wchars"/>\
+            </div>\
+            <div class="eight wide center aligned column">\
+              <TimeResults :cps="cps" :seconds="seconds"/>\
+            </div>\
+            <div class="eight wide center aligned column">\
+              <ClassResults :codeclass="codeclass"/>\
+            </div>\
           </div>\
         </div>\
       </div>\
