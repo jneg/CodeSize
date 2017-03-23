@@ -50,10 +50,21 @@ Vue.component('TimeResults', {
       </div>\
       <div class="ui small brown statistic">\
         <div class="value">{{seconds}}</div>\
-        <div class="label">seconds to retype\
+        <div class="label">Seconds to Retype\
       </div>\
     </div>',
   'props': ['cps', 'seconds']
+})
+
+Vue.component('ClassResults', {
+  'template':
+   '<div>\
+      <div class="ui small violet statistic">\
+        <div class="value">{{codeclass}}</div>\
+        <div class="label">Code Class\
+      </div>\
+    </div>',
+  'props': ['codeclass']
 })
 
 Vue.component('Controller', {
@@ -63,14 +74,17 @@ Vue.component('Controller', {
         <Inscription title="Code Size"/>\
         <textarea v-model="code" rows="30" style="width:100%;font-family:monospace"></textarea>\
         <div class="ui grid">\
-          <div class="five wide center aligned column">\
+          <div class="eight wide center aligned column">\
             <LineResults :tlines="tlines" :glines="glines" :wlines="wlines"/>\
           </div>\
-          <div class="six wide center aligned column">\
+          <div class="eight wide center aligned column">\
             <CharResults :tchars="tchars" :gchars="gchars" :wchars="wchars"/>\
           </div>\
-          <div class="five wide center aligned column">\
+          <div class="eight wide center aligned column">\
             <TimeResults :cps="cps" :seconds="seconds"/>\
+          </div>\
+          <div class="eight wide center aligned column">\
+            <ClassResults :codeclass="codeclass"/>\
           </div>\
         </div>\
       </div>\
@@ -107,6 +121,16 @@ Vue.component('Controller', {
     },
     'cps': function () {
       return 5
+    },
+    'codeclass': function () {
+      if (this.gchars > 100000) return 'Astronomical'
+      if (this.gchars > 20000) return 'Mammoth'
+      if (this.gchars > 5000) return 'Jumbo'
+      if (this.gchars > 2000) return 'Modest'
+      if (this.gchars > 1000) return 'Little'
+      if (this.gchars > 500) return 'Compact'
+      if (this.gchars > 200) return 'Mini'
+      return 'Microscopic'
     }
   }
 })
